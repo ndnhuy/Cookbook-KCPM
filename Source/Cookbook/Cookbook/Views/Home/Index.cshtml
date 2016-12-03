@@ -1,0 +1,331 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app" class="section-landingPage">
+    <div class="hi"></div>
+    <div id="header">
+        <div class="header-section-landing" style="background-image: url(img/landing/header-img_01.jpg);">
+            <div class="header-content col940">
+                <h3>Cookbook</h3>
+                <h2>Mạng xã hội chia sẻ món ăn đến với mọi người.</h2>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="content" class="content ui-animate-opacity-250" style="opacity: 1;">
+
+        <div class="dish-section">
+            <div class="col940 dish-intro">
+                <div class="dish-info">
+                    <p>Top 3 món ăn được nhiều người thích nhất</p>
+                </div>
+                <a href="@Url.Content("~/explore")" class="internal-link all-content first">Còn nhiều món ngon hơn nữa...</a>
+            </div>
+            <div class="clear"></div>
+            <div id="dailydishes" class="col940 dailydishes">
+                <div class="clear"></div>
+
+                <div class="thelist">
+                    <ul data-bind="foreach: foods" id="dish-thumbnails-list" class="ui-list ui-list-dishes ui-thumbs ui-count-12">
+                        <li data-bind="event: { mouseover: showItem, mouseout: hideItem }, css: { hover: selected }" class="type-dish ui-count-12">
+                            <div class="head">
+                                <div class="img dish-img">
+                                    <div data-bind="style: { backgroundImage: Hinh, opacity: 1 }" class="ui-image ui-animate-opacity-250"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="details">
+                                <div class="title" style="left: 10px;">
+                                    <a data-bind="text: TenMon, attr: { href: detail }" class="dish-link internal-link"></a>
+                                </div>
+                                <div data-bind="text: SoLuongThich" class="num love" style="right: 15px;"></div>
+                            </div>
+                            <div data-bind="style: { opacity: visible }" class="overlay logged" style="opacity: 0;">
+                                <a data-bind="attr: { href: detail }" class="enter dish-link internal-link"></a>
+
+                                <div class="dish-action dish-profile">
+                                    <div class="icon dish"></div>
+                                    <a data-bind="attr: { href: detail }" class="internal-link">Chi tiết món</a>
+                                </div>
+                                <div class="dish-action wished-overlay link-wish">
+                                    <div class="icon wish"></div>
+
+                                    <a data-bind="text: Favourite, click: like" class="wish-action" href="#"></a>
+
+                                </div>
+                                <div class="dish-action cook-profile">
+                                    <div class="icon cook"></div>
+                                    <a class="internal-link" data-bind="attr: { href: store }">Người Nấu</a>
+                                </div>
+
+                                <div class="center-info"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="pop_dish-section" class="pop_dish-section">
+            <div class="col940">
+                <h4>Tổng hợp các món ăn tham khảo !!</h4>
+                <div class="clear"></div>
+            </div>
+            <div class="qwerty" style="opacity: 1;">
+                <ul data-bind="foreach: beforeFoods" class="before">
+                    <li data-bind="event: { mouseover: showItem, mouseout: hideItem }, css: { hover: selected }, click: showDialog" class="type-dish">
+                        <div data-bind="style: { opacity: visible }" class="overlay loggedout" style="opacity: 0;">
+                            <a class="enter dish-link internal-link"></a>
+                            <div class="popular-overlay">
+                                <h5 style="width: 100%" data-bind="text: TenMon">Ten Mon</h5>
+                                <div class="clear"></div>
+                                <div class="dish-profile">
+                                    <div class="icon-dish"></div>
+                                    <a class="internal-link">Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-image ui-animate-opacity-250" data-bind="style: { backgroundImage: Hinh, opacity: 1 }"></div>
+                    </li>
+                </ul>
+                <ul data-bind="foreach: newFoods" class="new">
+                    <li data-bind="event: { mouseover: showItem, mouseout: hideItem }, css: { hover: selected }, click: showDialog" class="type-dish">
+                        <div data-bind="style: { opacity: visible }" class="overlay loggedout" style="opacity: 0;">
+                            <a class="enter dish-link internal-link"></a>
+                            <div class="popular-overlay">
+                                <h5 style="width: 100%" data-bind="text: TenMon">Ten Mon</h5>
+                                <div class="clear"></div>
+                                <div class="dish-profile">
+                                    <div class="icon-dish"></div>
+                                    <a class="internal-link">Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-image ui-animate-opacity-250" data-bind="style: { backgroundImage: Hinh, opacity: 1 }"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="lightbox" class="ui-animate-opacity-250" style="opacity: 0; z-index: -1;">
+    <div class="light-content ui-animate-opacity-250" style="height: 510px; top: 50%; margin-top: -255px;">
+        <div class="ui-box ui-modal hasbottom">
+            <div class="close closedialog"></div><div class="header"></div><div class="content-wrapper">
+                <div class="content">
+                    <h1 id="dialogTenMon"></h1>
+                    <h2>Nguyên liệu:</h2>
+                    <p id="dialogNguyenLieu"></p>
+                    <br />
+                    <h2>Hướng dẫn:</h2>
+                    <p id="dialogCachLam"></p>
+                </div>
+            </div><div class="bottom"><div class="ui-btn animated-fast closedialog"><a id="update-user">Đóng</a></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var viewModel;
+    var loading = false;
+
+    $(function () {
+
+        applyBindings();
+
+        $('.closedialog').click(function () {
+            $('#lightbox').css('opacity', '0');
+            $('#lightbox').css('z-index', '-1');
+        });
+
+    });
+
+    function foodBottom(data) {
+        var self = this;
+        data = data || {};
+
+        self.TenMon = data.TenMon;
+        self.show = ko.observable(0);
+        self.visible = ko.observable(0);
+        self.Hinh = 'url(' + data.Hinh + ')';
+
+        self.NguyenLieu = data.NguyenLieu;
+        self.CachLam = data.CachLam;
+
+        this.selected = ko.observable(false);
+
+        this.showItem = function () {
+            this.selected(!this.selected());
+            self.visible(1);
+        }
+
+        this.hideItem = function () {
+            this.selected(!this.selected());
+            self.visible(0);
+        }
+
+        this.showDialog = function () {
+            $('#lightbox').css('opacity', '1');
+            $('#lightbox').css('z-index', '9500');
+            $('#dialogNguyenLieu').text(self.NguyenLieu);
+            $('#dialogCachLam').text(self.CachLam);
+            $('#dialogTenMon').text(self.TenMon);
+        }
+    }
+
+    function food(data) {
+        var self = this;
+        data = data || {};
+
+        self.Favourite = ko.observable('Thích')
+
+        self.MaMon = data.MaMonAn;
+        self.SoLuongThich = ko.observable(data.SoLuongThich);
+        self.TenMon = data.TenMon;
+        self.show = ko.observable(0);
+        self.visible = ko.observable(0);
+        self.SoLuongThich = data.SoLuongThich;
+
+        self.detail = '@Url.Content("~/dish/")' + data.MaMonAn;
+        self.store = '@Url.Content("~/user/")' + data.MaNguoiDung;
+
+        self.Hinh = ko.observable('url(img/icons/default.dish.jpg)');
+
+        if (data.Hinh != null) {
+            if (data.Hinh.trim() != '') {
+                link = 'url(' + data.Hinh + ')';
+                self.Hinh(link);
+            }
+        }
+
+        if ('@Request.IsAuthenticated.ToString()' == '@Boolean.TrueString') {
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg == 'True') {
+                        self.Favourite('Đã thích');
+                    }
+                }
+            });
+        }
+
+        this.like = function () {
+
+            if ('@Request.IsAuthenticated.ToString()' == '@Boolean.FalseString') {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    self.SoLuongThich(msg);
+                    self.Favourite('Đã thích');
+                }
+            });
+        }
+
+        this.selected = ko.observable(false);
+
+        this.showItem = function () {
+            this.selected(!this.selected());
+            self.visible(1);
+        }
+
+        this.hideItem = function () {
+            this.selected(!this.selected());
+            self.visible(0);
+        }
+    }
+
+    function viewModel() {
+        var self = this;
+
+        self.foods = ko.observableArray();
+        self.newFoods = ko.observableArray();
+        self.beforeFoods = ko.observableArray();
+
+        self.loadBeforeFoods = function () {
+
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/RutTrich',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    ko.utils.arrayForEach(msg, function (item) {
+                        self.beforeFoods.push(new foodBottom(item));
+                    });
+
+                    loading = false;
+                }
+            });
+        }
+
+        self.loadNewFoods = function () {
+
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/RutTrich',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    ko.utils.arrayForEach(msg, function (item) {
+                        self.newFoods.push(new foodBottom(item));
+                    });
+
+                    loading = false;
+                }
+            });
+        }
+
+        self.loadFoods = function () {
+
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/MonAn/TopLike/3',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    ko.utils.arrayForEach(msg, function (item) {
+                        self.foods.push(new food(item));
+                    });
+
+                    loading = false;
+                }
+            });
+        }
+
+        self.loadFoods();
+        self.loadNewFoods();
+        self.loadBeforeFoods();
+
+        return self;
+    }
+
+    function applyBindings() {
+        viewModel = new viewModel();
+        ko.applyBindings(viewModel);
+    }
+
+</script>

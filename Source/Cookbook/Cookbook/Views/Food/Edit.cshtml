@@ -1,0 +1,260 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+<link rel="stylesheet" type="text/css" href="../../Content/feed.css">
+<link rel="stylesheet" type="text/css" href="../../Content/semantic.css">
+ <script src="../../Scripts/jquery.validate.min.js"></script>
+ <script src="../../Scripts/jquery.validate.js"></script>
+<h2>Chỉnh sửa món ăn</h2>
+
+<div id="app" class="section-createdish">
+        <div id="header">
+            <div class="newdish-header-icon"></div>
+        </div>
+        <div id="content" class="content ui-animate-opacity-250" style="opacity: 1;">
+            <div id="create-dish-content" class="col940">
+                <h1 id="createdish-title">Cập nhật món ăn</h1>
+                <div id="general-info">
+
+                         <!-- upload anh-->
+                    <fieldset id="field-file-container" class="create-box">
+                        <div class="checkmark" style="display: none;"></div>
+                        <div class="input-badge">1</div>
+                        <div class="input-container">
+                            <h4>Hình ảnh món ăn</h4>
+                            <p class="requirements">.png or .jpg</p>
+                            <ul class="create-list">
+                                <li class="moveable-box margin-bottom">
+                                    <form name="form1" id="formUploadImage" method="post" action="/Food/POSTEDIT/@ViewData["MaMonAn"]" enctype="multipart/form-data">  
+                                                                                           
+                                    <div class="photo-upload">
+                                        <div class="pic-box">
+                                            <div class="ui-btn">                                                 
+                                                    <a id="dish-uploadr" href="#" style="position: relative; overflow: hidden; direction: ltr;" class="">Tải ảnh
+                                                        <input type="file" id="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+                                                    </a>
+                                                    <div class="ui-spinner"></div>                                            
+                                            </div>
+                                        </div>
+                                        <input type="text" name="linkHinh" id="linkHinh" value="@ViewData["Hinh"]" readonly="true" />
+                                        <input type="submit" value="Tạo link hình!"/>                                
+                                    </div> 
+                                                                                 
+                                    </form>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <img id="hinhanh" height="80px" width="80px" />
+                    </fieldset>
+                    <fieldset id="field-title-container" class="create-box">
+                        <div class="checkmark" style="display: none;"></div>
+                        <div class="input-badge">2</div>
+                        <div class="input-container">
+                            <h4>Tên món ăn </h4>
+                            <p class="requirements">60</p>
+                            <textarea id="txtTenMon" runat="server" data-maxcount="60" type="text" name="set-title" placeholder="" class="single-height required">@ViewData["TenMon"]</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset id="field-title-container1" class="create-box">
+                        <div class="checkmark" style="display: none;"></div>
+                        <div class="input-badge">3</div>
+                        <div class="input-container">
+                            <h4>Giới thiệu</h4>
+                            <p class="requirements">100</p>
+                            <textarea id="txtGioiThieu" runat="server" data-maxcount="100" type="text" name="set-title" placeholder="" class="double-height">@ViewData["GioiThieu"]</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset id="field-title-container8" class="create-box">
+                        <div class="checkmark" style="display: none;"></div>
+                        <div class="input-badge">4</div>
+                        <div class="input-container">
+                            <h4>Nguyên liệu </h4>
+                            <p class="requirements">100</p>
+                            <textarea id="txtNguyenLieu" runat="server" data-maxcount="100" type="text" name="set-title" placeholder="" class="double-height">@ViewData["NguyenLieu"]</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset id="field-title-container9" class="create-box">
+                        <div class="checkmark" style="display: none;"></div>
+                        <div class="input-badge">5</div>
+                        <div class="input-container">
+                            <h4>Cách làm </h4>
+                            <p class="requirements">100</p>
+                            <textarea id="txtCachLam" runat="server" data-maxcount="100" type="text" name="set-title" placeholder="" class="double-height">@ViewData["CachLam"]</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset id="field-category-container" class="create-box category-create">
+                      <div class="checkmark" style="display: none;"></div>
+                      <div class="input-badge">6</div>
+                      <div class="input-container">
+                        <h4>Chọn loại món</h4>    
+                          <p class="requirements">100</p>
+                            <ul class="create-list">
+                                <li class="moveable-box margin-bottom">     
+                            <div class="ui selection dropdown">
+                          <input type="hidden" name="gender" id="MaLoaiMon">
+                          <i class="dropdown icon"></i>                          
+                            @{
+                                using (var client = new System.Net.WebClient())
+                                {
+                                    try
+                                    {
+                                        var json = client.DownloadString("http://cookbookapi.apphb.com/api/loaimon");
+                                        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                                        dynamic model = serializer.Deserialize<dynamic>(json);
+                                        string TenMonAn = System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(model[0]["TenLoaiMon"])));
+                                        <div class="default text" id="LoaiMon"> Chọn </div>
+                        
+                                        <div class="menu ui transition hidden" id="MenuLoaiMon">     
+                                        @foreach (dynamic m in model)
+                                        {
+                                            //convert từ utf8 -> unicode                                        
+                                                <div class="item" data-value="@m["MaLoaiMon"]">@System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(m["TenLoaiMon"])))</div>                                        
+                                        }
+                                        </div>                        
+                                    }
+                                    catch { }
+                                    //var model = serializer.Deserialize<SomeModel>(json);
+                                    // TODO: do something with the model
+                                }                        
+                                }                           
+                            </div>
+                                    </li>
+                                </ul>            
+                       </div>                      
+                    </fieldset>
+                    <fieldset id="field-category-container" class="create-box category-create">
+                      <div class="checkmark" style="display: none;"></div>
+                      <div class="input-badge">7</div>
+                      <div class="input-container">
+                        <h4>Chọn mức độ</h4>    
+                          <p class="requirements">100</p>
+                            <ul class="create-list">
+                                <li class="moveable-box margin-bottom">     
+                            <div class="ui selection dropdown">
+                          <input type="hidden" name="gender" id="MaMucDo">
+                          <i class="dropdown icon"></i>                          
+                            @{
+                                using (var client = new System.Net.WebClient())
+                                {
+                                    try
+                                    {
+                                        var json = client.DownloadString("http://cookbookapi.apphb.com/api/MucDo");
+                                        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                                        dynamic model = serializer.Deserialize<dynamic>(json);
+                                        string MucDo = System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(model[0]["TenMucDo"])));
+                                        <div class="default text" id="MucDo"> Chọn </div>
+                        
+                                        <div class="menu ui transition hidden" id="MenuMucDo">     
+                                        @foreach (dynamic m in model)
+                                        {
+                                            //convert từ utf8 -> unicode                                        
+                                                <div class="item" data-value="@m["MaMucDo"]">@System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(m["TenMucDo"])))</div>                                        
+                                        }
+                                        </div>                        
+                                    }
+                                    catch { }
+                                    //var model = serializer.Deserialize<SomeModel>(json);
+                                    // TODO: do something with the model
+                                }                        
+                                }                           
+                            </div>
+                                    </li>
+                                </ul>            
+                       </div>                      
+                    </fieldset>                   
+                </div>             
+                <div id="action-menu" class="action btn-bar">
+                    <ul>
+                        <li>
+                          <div class="ui-btn green-btn">
+                              <a id="add-recipe-link" href="#" onclick="Submit()">Cập nhật</a>
+                              
+                              <div class="ui-spinner"></div>
+                          </div>
+                        
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">  
+        $("#MaLoaiMon").val('@ViewData["MaLoaiMon"]');  
+        $("#MaMucDo").val('@ViewData["MaMucDo"]');        
+        document.getElementById("hinhanh").src = document.getElementById("linkHinh").value;
+        
+        var d = new Date();
+        var date = d.getYear()+1900+"-"+d.getMonth()+"-"+d.getDay();
+        function Submit() {
+
+            $.ajax({
+                type: "PUT",
+                url: "http://cookbookapi.apphb.com/api/MonAn/"+@ViewData["MaMonAn"],
+                data: JSON.stringify({
+                    MaMonAn: @ViewData["MaMonAn"],
+                    TenMon: $("#txtTenMon").val(),
+                    GioiThieu: $("#txtGioiThieu").val(),
+                    Hinh: $("#linkHinh").val(),
+                    ThoiGianChuanBi: 120,
+                    ThoiGianNau: 120,
+                    NgayDang: date,
+                    NguyenLieu: $("#txtNguyenLieu").val(),
+                    CachLam: $("#txtCachLam").val(),
+                    MaNguoiDung: "@HttpContext.Current.User.Identity.Name",
+                    MaMucDo: $("#MaMucDo").val(),
+                    MaLoaiMon: $("#MaLoaiMon").val()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("success");
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            var validator = $("#input_form").validate({
+                rules: {
+                    username: "required",
+                    password: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    cpassword: {
+                        equalTo: "#password"
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    txtTenMon: {
+                        required: true,
+                        minlength: 30
+                    }
+                },
+                messages: {
+                    username: "Hãy điền tên đăng nhập.",
+                    password: {
+                        required: "Hãy điền mật khẩu",
+                        minlength: "Mật khẩu ít nhất 6 ký tự"
+                    },
+                    cpassword: {
+                        equalTo: "Mật khẩu xác nhận không chính xác"
+                    },
+                    email: {
+                        required: "Hãy nhập 1 địa chỉ email hợp lệ",
+                        email: "Địa chỉ email không hợp lệ"
+                    }
+                }
+            });
+        })
+        
+    </script>

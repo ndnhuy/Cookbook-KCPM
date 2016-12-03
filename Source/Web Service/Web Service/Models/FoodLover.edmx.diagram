@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ecd7bac2a9a74a638b76926c0d80dd54" Name="Diagram1" DisplayType="true" >
+        <EntityTypeShape EntityType="FoodLover.NguoiDung" Width="1.75" PointX="0.5" PointY="1.375" />
+        <EntityTypeShape EntityType="FoodLover.MonAn" Width="2" PointX="5.25" PointY="0.625" />
+        <EntityTypeShape EntityType="FoodLover.BinhLuan" Width="1.75" PointX="2.875" PointY="2.5" />
+        <EntityTypeShape EntityType="FoodLover.MucDo" Width="1.75" PointX="8.125" PointY="0.625" />
+        <EntityTypeShape EntityType="FoodLover.LoaiMon" Width="1.75" PointX="8.125" PointY="2.875" />
+        <AssociationConnector Association="FoodLover.NguoiDungBinhLuan" />
+        <AssociationConnector Association="FoodLover.MonAnBinhLuan" />
+        <AssociationConnector Association="FoodLover.NguoiDungMonAn" />
+        <AssociationConnector Association="FoodLover.MucDoMonAn" />
+        <AssociationConnector Association="FoodLover.MonAnLoaiMon" />
+        <EntityTypeShape EntityType="FoodLover.Thich" Width="1.75" PointX="2.875" PointY="0.5" />
+        <AssociationConnector Association="FoodLover.NguoiDungThich" />
+        <AssociationConnector Association="FoodLover.MonAnThich" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

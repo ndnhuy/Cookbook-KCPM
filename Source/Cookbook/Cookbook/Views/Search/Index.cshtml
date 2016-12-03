@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app" class="section-searches">
+    <div id="header">
+        <div class="search-toolbar new-toolbar">
+            <div class="col940">
+                <div id="filter-menu" class="toolbar">
+                    <div class="toolbar-section margin-right">
+                        <div class="ui-box-new">
+                            <div class="search-query">
+                                <span>Kết quả tìm kiếm cho: </span>
+                                <div class="search-q">@Model.Content</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toolbar-section">
+                        <ul class="ui-box-new choices search">
+                            <li id="menu-monan" class="select selectable selected">
+                                <a style="cursor: pointer" class="dishes-link" data-tab="dishes">Món ăn</a>
+                            </li>
+                            <li id="menu-daubep" class="select selectable">
+                                <a style="cursor: pointer" class="cooks-link" data-tab="cooks">Đầu bếp</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="content ui-animate-opacity-250" style="opacity: 1;">
+        <div id="dishes-list" class="col870 list-container">
+            <div id="list-monan" class="thelist" style="display: block;">
+                <ul data-bind="foreach: foods" id="dish-thumbnails-list" class="ui-list ui-list-dishes ui-thumbs ui-count-12">
+                    <li data-bind="event: { mouseover: showItem, mouseout: hideItem }, css: { hover: selected }" class="type-dish ui-count-12">
+                        <div class="head">
+                            <div class="img dish-img">
+                                <div data-bind="style: { backgroundImage: Hinh, opacity: 1 }" class="ui-image ui-animate-opacity-250"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="details">
+                            <div class="title" style="left: 10px;">
+                                <a data-bind="text: TenMon, attr: { href: detail }" class="dish-link internal-link"></a>
+                            </div>
+                            <div data-bind="text: SoLuongThich" class="num love" style="right: 15px;"></div>
+                        </div>
+                        <div data-bind="style: { opacity: visible }" class="overlay logged" style="opacity: 0;">
+                            <a data-bind="attr: { href: detail }" class="enter dish-link internal-link"></a>
+
+                            <div class="dish-action dish-profile">
+                                <div class="icon dish"></div>
+                                <a data-bind="attr: { href: detail }" class="internal-link">Chi tiết món</a>
+                            </div>
+                            <div class="dish-action wished-overlay link-wish">
+                                <div class="icon wish"></div>
+
+                                <a data-bind="text: Favourite, click: like" class="wish-action" href="#"></a>
+
+                            </div>
+                            <div class="dish-action cook-profile">
+                                <div class="icon cook"></div>
+                                <a class="internal-link" data-bind="attr: { href: store }">Người Nấu</a>
+                            </div>
+
+                            <div class="center-info"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div id="people-list" class="col870 list-container">
+            <div id="list-daubep" class="thelist" style="display: none;">
+                <ul data-bind="foreach: people" id="user-thumbnails-list" class="ui-list ui-list-users ui-people ui-count-12">
+                    <li class="ui-box type-user ui-count-12 has-activity">
+                        <div class="avatar">
+                            <div class="ui-avatar">
+                                <div data-bind="style: { backgroundImage: avatar, opacity: 1 }" class="ui-image ui-animate-opacity-250"></div>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="title">
+                                <a style="height: 79px;" data-bind="text: name, attr: { href: profile }" class="link-user internal-link"></a>
+                            </div>
+                            <div data-bind="text: location" class="activity"></div>
+                            <div class="extra2">
+                                <div class="ui-icon cook">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <div class="ui-btn">
+                                <a data-bind="attr: { href: profile }" class="following link-follow">Xem</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var searchContent = '@Html.Raw(Model.Content)';
+    var viewModel;
+    var page = 0;
+    var loading = false;
+
+    var swt = 'monan';
+
+    $(function () {
+
+        applyBindings();
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                if (loading == true)
+                    return;
+                loading = true;
+                page++;
+                if (swt == 'monan') {
+                    viewModel.loadFoods(page);
+                } else if (swt == 'daubep') {
+                    viewModel.loadPeople(page);
+                }
+            }
+        });
+
+        $('#menu-monan').click(function () {
+            swt = 'monan';
+            page = 0;
+            $('#menu-daubep').removeClass('selected');
+            $('#menu-monan').addClass('selected');
+            $('#list-monan').css('display', 'block');
+            $('#list-daubep').css('display', 'none');
+            viewModel.loadFoods(page);
+        });
+
+        $('#menu-daubep').click(function () {
+            swt = 'daubep';
+            page = 0;
+            $('#menu-monan').removeClass('selected');
+            $('#menu-daubep').addClass('selected');
+            $('#list-daubep').css('display', 'block');
+            $('#list-monan').css('display', 'none');
+            viewModel.loadPeople(page);
+        });
+    });
+
+    function person(data) {
+        var self = this;
+        data = data || {};
+
+        self.name = data.HoTen;
+        if (data.HoTen == '') {
+            self.name = data.MaNguoiDung;
+        }
+
+        self.location = data.DiaChi;
+
+        self.profile = '@Url.Content("~/user/")' + data.MaNguoiDung;
+
+        self.Hinh = data.Hinh;
+
+        self.avatar = ko.observable('url(@Url.Content("~/img/avatars/default_avatar.2x.png"))');
+
+        if (data.Hinh != null) {
+
+            var avatar_url = data.Hinh;
+
+            $.ajax({
+                url: self.Hinh,
+                type: 'HEAD',
+                success: function () {
+                    var link = 'url(' + self.Hinh + ')';
+                    self.avatar(link);
+                }
+            });
+        }
+    }
+
+    function food(data) {
+        var self = this;
+        data = data || {};
+
+        self.Favourite = ko.observable('Thích')
+
+        self.MaMon = data.MaMonAn;
+        self.SoLuongThich = ko.observable(data.SoLuongThich);
+        self.TenMon = data.TenMon;
+        self.show = ko.observable(0);
+        self.visible = ko.observable(0);
+        self.SoLuongThich = data.SoLuongThich;
+
+        self.detail = '@Url.Content("~/dish/")' + data.MaMonAn;
+        self.store = '@Url.Content("~/user/")' + data.MaNguoiDung;
+
+        self.Hinh = ko.observable('url(img/icons/default.dish.jpg)');
+
+        if (data.Hinh != null) {
+            if (data.Hinh.trim() != '') {
+                link = 'url(' + data.Hinh + ')';
+                self.Hinh(link);
+            }
+        }
+
+        if ('@Request.IsAuthenticated.ToString()' == '@Boolean.TrueString') {
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg == 'True') {
+                        self.Favourite('Đã thích');
+                    }
+                }
+            });
+        }
+
+        this.like = function () {
+
+            if ('@Request.IsAuthenticated.ToString()' == '@Boolean.FalseString') {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    self.SoLuongThich(msg);
+                    self.Favourite('Đã thích');
+                }
+            });
+        }
+
+        this.selected = ko.observable(false);
+
+        this.showItem = function () {
+            this.selected(!this.selected());
+            self.visible(1);
+        }
+
+        this.hideItem = function () {
+            this.selected(!this.selected());
+            self.visible(0);
+        }
+    }
+
+    function viewModel() {
+        var self = this;
+
+        self.foods = ko.observableArray();
+        self.people = ko.observableArray();
+
+        self.loadFoods = function (page) {
+
+            var trick = searchContent + '-' + page;
+
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/MonAn/TimKiem/' + trick,
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    if (page == 0) {
+                        var mappedFoods = $.map(msg, function (item) { return new food(item); });
+                        self.foods(mappedFoods);
+                    } else {
+                        ko.utils.arrayForEach(msg, function (item) {
+                            self.foods.push(new food(item));
+                        });
+                    }
+                    loading = false;
+                }
+            });
+        }
+
+        self.loadPeople = function (page) {
+
+            var trick = searchContent + '-' + page;
+
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/NguoiDung/TimKiem/" + trick,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    if (page == 0) {
+                        var mappedPeople = $.map(msg, function (item) { return new person(item); });
+                        self.people(mappedPeople);
+                    } else {
+                        ko.utils.arrayForEach(msg, function (item) {
+                            self.people.push(new person(item));
+                        });
+                    }
+                    loading = false;
+                }
+            });
+        }
+
+        self.loadFoods(0);
+        self.loadPeople(0);
+        return self;
+    }
+
+    function applyBindings() {
+        viewModel = new viewModel();
+        ko.applyBindings(viewModel);
+    }
+</script>

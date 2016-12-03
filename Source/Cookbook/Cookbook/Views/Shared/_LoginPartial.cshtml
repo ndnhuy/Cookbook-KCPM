@@ -1,0 +1,111 @@
+﻿@{
+    string avatar = @Url.Content("~/img/avatars/default_avatar.png");
+}
+
+@if (Request.IsAuthenticated)
+{
+    if (Session["IsNewUser"] != null && Session["IsNewUser"].ToString() == Boolean.TrueString)
+    {
+        <script>
+            $.ajax({
+                type: "POST",
+                url: "http://cookbookapi.apphb.com/api/NguoiDung",
+                data: JSON.stringify({
+                    MaNguoiDung: '@HttpContext.Current.User.Identity.Name',
+                    Ho: '@Session["Ho"].ToString()',
+                    Ten: '@Session["Ten"].ToString()',
+                    Hinh: '@Session["Avatar"].ToString()',
+                    DiaChi: 'Vietnam'
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        </script>
+    }
+
+    if (Session["IsNewUser"] == null)
+    {
+        using (var client = new System.Net.WebClient())
+        {
+            var json = client.DownloadString(String.Format("http://cookbookapi.apphb.com/api/NguoiDung/Get/{0}", @HttpContext.Current.User.Identity.Name));
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            dynamic model = serializer.Deserialize<dynamic>(json);
+
+            Session["Avatar"] = Convert.ToString(model["Hinh"]);
+            Session["Ho"] = Convert.ToString(model["Ho"]);
+            Session["Ten"] = Convert.ToString(model["Ten"]);
+        }
+    }
+
+    if (@Session["Avatar"] != null)
+    {
+        avatar = @Session["Avatar"].ToString();
+    }
+
+}
+
+@if (Request.IsAuthenticated)
+{
+    <div id="create-dish" class="create-dish-container">
+        <a class="internal-link" href="@Url.Content("~/food")">
+            <div class="plus-icon-dish"></div>Thêm món
+        </a>
+    </div>
+
+    <div class="ui-avatar" style="background-image: url('@avatar')">
+        <div class="ui-avatar-overlay">
+            <a id="link-drop-menu" class="link-user"></a>
+            <div id="avatar-dropdown" class="ui-dropdown close">
+                <ul>
+                    <li>
+                        <a class="ui-link link-username internal-link" href="@Url.Content("~/user/" + @HttpContext.Current.User.Identity.Name)">
+                            <div class="profile-popdown-icon"></div>
+                            Trang của tôi
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ui-link link-logout" href="@Url.Content("~/Account/Logout")">
+                            <div class="signout-popdown-icon"></div>
+                            Sign Out
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div id="create-dish" class="create-dish-container">
+        <a onclick="login();" class="link-opensignup"><span class="login-icon"></span>Facebook</a>
+    </div>
+}
+
+<script>
+
+    $(function () {
+        $('#link-drop-menu').click(function () {
+            if ($('#avatar-dropdown').hasClass('close')) {
+                $('#avatar-dropdown').removeClass('close');
+                $('#avatar-dropdown').addClass('open');
+            } else if ($('#avatar-dropdown').hasClass('open')) {
+                $('#avatar-dropdown').removeClass('open');
+                $('#avatar-dropdown').addClass('close');
+            }
+        });
+    });
+
+    function login() {
+        FB.login(function (response) {
+            if (response.authResponse) {
+                var access_token = FB.getAuthResponse()['accessToken'];
+                window.location = "/Account/FacebookLogin?token=" + access_token;
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, { scope: '' });
+    }
+</script>

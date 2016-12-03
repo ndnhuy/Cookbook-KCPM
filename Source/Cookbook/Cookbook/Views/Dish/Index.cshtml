@@ -1,0 +1,315 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app" class="section-dish">
+
+    <div id="header">
+        <div class="col940">
+
+            <div id="dish-top">
+
+                <div id="hero">
+                    <div class="ui-image ui-animate-opacity-250" style="background-image: url(@Model.Hinh); opacity: 1;"></div>
+                </div>
+
+                <div id="details" class="">
+
+                    <div class="top">
+                        <h1 id="dish-title">@Model.TenMonAn</h1>
+                        <div id="user-avatar" class="ui-avatar">
+                            <div class="default-avatar"></div>
+                            <div class="ui-image ui-animate-opacity-250" style="background-image: url(@Model.OwnerHinh); opacity: 1;"></div>
+                            <div class="ui-avatar-overlay"><a class="link-user internal-link" href="@Url.Content(String.Format("~/user/{0}", Model.OwnerMa))"></a></div>
+                        </div>
+                        <ul>
+                            <li class="user-container">
+                                <span class="ui-translatable" data-trns="by"></span>
+                                <a class="internal-link link-user" href="@Url.Content(String.Format("~/user/{0}", Model.OwnerMa))" id="user-name">@Model.OwnerHoTen</a>
+                            </li>
+                            <li class="location-container">
+                                <span class="location-icon-small"></span>
+                                <span id="dish-location" class="ui-text-bold ui-text-noun">@Model.OwnerDiaChi</span>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                        <div id="dish-description">
+                            <p></p>
+                        </div>
+                        <div class="wish-count"><p>@Model.SoLuongThich</p><div class="heart-icon "></div></div>
+                    </div>
+
+                    <div class="action">
+
+                        @{
+                            if (Request.IsAuthenticated && HttpContext.Current.User.Identity.Name == Model.OwnerMa)
+                            {
+                                <ul class=" action-bar">
+
+                                    <li style="width: 200px;" id="cmdShare" class="share action-bar-item"><div class="ui-select close" data-value=""><div class="icon"></div><label>Chia sẻ</label><div class="action"></div></div></li>
+
+                                    <li style="width: 203px;" class="wish action-bar-item ui-btn">
+                                        <a class="link-wish-dish" href="@Url.Content(String.Format("~/food/edit/{0}", Model.MaMonAn))">Cập nhật</a>
+                                    </li>
+
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class=" action-bar">
+                                    <li style="width: 403px;" id="cmdShare" class="share action-bar-item"><div class="ui-select close" data-value=""><div class="icon"></div><label>Chia sẻ</label><div class="action"></div></div></li>
+                                </ul>
+                            }
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="content" class="content ui-animate.opacity-250 ui-animate-opacity-250" style="opacity: 1;">
+
+        <div id="recipe-content" class="col940 recipe-content">
+
+            <div id="recipe-details">
+                <ul class="list">
+                    <li>
+                        <span>Loại Món:</span>
+                        <p>@Model.TenLoaiMon</p>
+                    </li>
+                    <li>
+                        <span>Mức độ:</span>
+                        <p>@Model.TenMucDo</p>
+                    </li>
+                    <li>
+                        <span>Thời gian chuẩn bị:</span>
+                        <p>@Model.ThoiGianChuanBi</p>
+                    </li>
+                    <li>
+                        <span>Thời gian nấu:</span>
+                        <p>@Model.ThoiGianNau</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="w780">
+
+                <div id="recipe-steps">
+                    <ul id="steps">
+                        <li>
+                            <div class="step-container">
+                                <p>@Model.CachLam</p>
+                            </div>
+                            <div class="notes-box">
+                                <div id="notes-num">
+                                    <a href="#" class="show-notes-link" style="display : none">
+
+                                    </a>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="recipe-ingredients" class="sticky" style="margin-top: 50px;">
+                    <h3>Nguyên Liệu</h3>
+                    <div id="ingredients">@Model.NguyenLieu</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="w780">
+                <div id="comments-header"><span data-bind="text: comments().length" class="comments-num"></span> Comments</div>
+                <div style="width: 780px" id="dish-comments">
+                    <ul data-bind="foreach: comments" id="comments" class="ui-list ui-list-comments ui-comments ui-count-undefined">
+                        <li class="comment">
+                            <div class="user img">
+                                <div class="ui-image ui-animate-opacity-250" data-bind="style: { backgroundImage: Hinh, opacity: 1 }"></div>
+                            </div>
+                            <div class="comment-wrapper">
+                                <div class="comment">
+                                    <div class="details">
+                                        <a class="title link-user internal-link" data-bind="text: HoTen, attr: { href: Store }"></a>
+                                        <p data-bind="text: ThoiGian" style="right: -320px;" class="date"></p>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p data-bind="text: NoiDung"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div class="comment-area">
+                            <div id="field-addcomment-container" class="ui-field textarea hasextra comment">
+                                <div class="badge avatar">
+                                    <div class="ui-image ui-animate-opacity-250" style="background-image: url('@Session["Avatar"].ToString()'); opacity: 1;"></div>
+                                </div>
+                                <div class="field-container">
+                                    <div class="field">
+                                        <div class="label">
+                                            <p>@String.Format("{0} {1}", Session["Ho"].ToString(), Session["Ten"].ToString())</p>
+                                        </div>
+                                        <div class="input">
+                                            <textarea data-maxcount="240" id="field-description" placeholder="Write your comment here" style="overflow: hidden; height: 62px;"></textarea>
+                                            <div style="position: absolute; display: none; word-wrap: break-word; white-space: pre-wrap; border: 0px none rgb(85, 85, 85); font-weight: 100; width: 488px; font-family: MuseoSans, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 26.875px; font-size: 18px; padding: 3px 2px 2px;">&nbsp;</div>
+                                        </div>
+                                        <div class="extra">
+                                            <p id="field-maxdescription" data-maxcount="240" class="charcount"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin: 15px 0 10px 560px" id="comment-submit">
+                                <div class="ui-btn">
+                                    <a style="cursor: pointer;" id="cmdComment">Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var viewModel;
+
+    var mamon = '@Model.MaMonAn'
+    var userid = '@HttpContext.Current.User.Identity.Name'
+
+    $(function () {
+
+        applyBindings();
+
+        $("#cmdComment").click(function () {
+
+            if ($("#field-description").val().length == 0 > 240)
+                return;
+
+            var binhluan = {
+                MaNguoiDung: userid,
+                MaMonAn: mamon,
+                NoiDung: $("#field-description").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'http://cookbookapi.apphb.com/api/BinhLuan',
+                data: JSON.stringify(binhluan),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                    msg.HoTen = '@Convert.ToString(Session["Ho"])' + ' ' + '@Convert.ToString(Session["Ten"])';
+                    msg.Hinh = '@Convert.ToString(Session["Avatar"])';
+                    viewModel.comments.push(new comment(msg));
+                    $("#field-description").val('');
+                }
+            });
+        });
+
+        $('#cmdShare').click(function () {
+
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+
+                    FB.ui({
+                        method: 'feed',
+                        link: 'http://cookbookweb.apphb.com/dish/' + mamon,
+                        picture: '@Model.Hinh',
+                        caption: '@Model.TenMonAn',
+                        description: 'Mạng xã hội Cookbook dành cho mọi người yêu thích món ăn có thể tham gia nấu nướng và chia sẻ đến với mọi người.'
+                    }, function (response) { });
+
+                    var uid = response.authResponse.userID;
+                    var accessToken = response.authResponse.accessToken;
+
+                } else if (response.status === 'not_authorized') {
+
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            var access_token = FB.getAuthResponse()['accessToken'];
+                            window.location = "/Account/FacebookLogin?token=" + access_token;
+                        } else {
+                            console.log('User cancelled login or did not fully authorize.');
+                        }
+                    }, { scope: '' });
+
+                } else {
+
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            var access_token = FB.getAuthResponse()['accessToken'];
+                            window.location = "/Account/FacebookLogin?token=" + access_token;
+                        } else {
+                            console.log('User cancelled login or did not fully authorize.');
+                        }
+                    }, { scope: '' });
+
+                }
+            });
+
+        });
+    });
+
+
+    function comment(data) {
+        var self = this;
+        data = data || {};
+
+        self.Store = '@Url.Content("~/user/")' + data.MaNguoiDung;
+        var day = moment(data.NgayDang);
+        self.ThoiGian = day.format("MMMM D, h:mm a");
+        self.NoiDung = data.NoiDung;
+        self.HoTen = data.HoTen;
+        self.Hinh = ko.observable('url(@Url.Content("~/img/avatars/default_avatar.2x.png"))');
+
+        if (data.Hinh != null) {
+            if (data.Hinh.trim() != '') {
+                link = 'url(' + data.Hinh + ')';
+                self.Hinh(link);
+            }
+        }
+    }
+
+    function viewModel() {
+        var self = this;
+
+        self.comments = ko.observableArray();
+
+        self.loadComments = function () {
+
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/BinhLuan/GetCommentsByFoodId/' + mamon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    var mappedComments = $.map(msg, function (item) { return new comment(item); });
+                    self.comments(mappedComments);
+                }
+            });
+        }
+
+        self.loadComments();
+        return self;
+    }
+
+    function applyBindings() {
+        viewModel = new viewModel();
+        ko.applyBindings(viewModel);
+    }
+
+</script>

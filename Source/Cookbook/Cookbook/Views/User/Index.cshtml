@@ -1,0 +1,285 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app" class="section-profile">
+    <div id="header">
+        <div class="col940">
+
+            <div id="user-avatar" class="ui-avatar">
+                <div class="ui-image ui-animate-opacity-250" data-bind="style: { backgroundImage: avatar, opacity: 1 }"></div>
+            </div>
+
+            <div id="profile-top" class="ui-box  cook has-cover">
+
+                <div class="ui-badge"></div>
+
+                <div class="cover">
+                    <div class="image"><div class="ui-image ui-animate-opacity-250" style="background-image: url('@Url.Content("~/img/interface/default.cover.jpg")'); opacity: 1;"></div></div>
+                    <div class="overlay"></div>
+                    <div class="text">
+
+                        <h1 id="name" data-bind="text: hoten"></h1>
+                        <div class="details">
+                            <span data-bind="text: diachi" class="profile-location" id="location"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="cook left"></div>
+                <div class="cook center"></div>
+                <div class="cook right"></div>
+
+                @if (Request.IsAuthenticated && HttpContext.Current.User.Identity.Name == @Model.Id.ToString())
+                {
+                    <div class="menu">
+                        <div style="width: 614px" id="menu-area" class="center">
+                            <ul class="banner-menu count-3">
+                                <li id="li-Dishes" style="width: 307px" class="dishes selected">
+                                    <a id="menu-Dishes" class="link-dishes" data-section="dishes"></a>
+                                    <div class="icon">
+                                        <div class="ui-icon dishes"></div>
+                                    </div>
+                                    <div class="label">Dishes</div>
+                                </li>
+                                <li id="li-Wishes" style="width: 307px" class="wishes">
+                                    <a id="menu-Wishes" class="link-wishes" data-section="wishes"></a>
+                                    <div class="icon">
+                                        <div class="ui-icon wish"></div>
+                                    </div>
+                                    <div class="label">Favourites List</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="follow-area" class="right">
+                            <div class="ui-btn secondary">
+                                <a class="following link-edit-profile" href="@Url.Content("~/food")">
+                                    Thêm món
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="menu">
+                        <div style="width: 940px" id="menu-area" class="center">
+                            <ul class="banner-menu count-3">
+                                <li id="li-Dishes" style="width: 470px" class="dishes selected">
+                                    <a id="menu-Dishes" class="link-dishes" data-section="dishes"></a>
+                                    <div class="icon">
+                                        <div class="ui-icon dishes"></div>
+                                    </div>
+                                    <div class="label">Món Ăn</div>
+                                </li>
+                                <li id="li-Wishes" style="width: 470px" class="wishes">
+                                    <a id="menu-Wishes" class="link-wishes" data-section="wishes"></a>
+                                    <div class="icon">
+                                        <div class="ui-icon wish"></div>
+                                    </div>
+                                    <div class="label">Thích</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="content ui-animate.opacity-250 ui-animate-opacity-250" style="opacity: 1;">
+
+        <div id="user-foodlist" class="col870 list-container">
+
+            <div class="thelist" style="opacity: 1;">
+                <ul data-bind="foreach: foods" id="dish-thumbnails-list" class="ui-list ui-list-dishes ui-thumbs ui-count-5">
+                    <li data-bind="event: { mouseover: showItem, mouseout: hideItem }, css: { hover: selected }" class="type-dish ui-count-12">
+                        <div class="head">
+                            <div class="img dish-img">
+                                <div data-bind="style: { backgroundImage: Hinh, opacity: 1 }" class="ui-image ui-animate-opacity-250"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="details">
+                            <div class="title" style="left: 10px;">
+                                <a data-bind="text: TenMon" class="dish-link internal-link" href="#"></a>
+                            </div>
+                            <div data-bind="text: SoLuongThich" class="num love" style="right: 15px;"></div>
+
+                        </div>
+                        <div data-bind="style: { opacity: visible }" class="overlay logged" style="opacity: 0;">
+                            <a class="enter dish-link internal-link" href="#"></a>
+
+                            <div style="margin-top: 90px;" class="dish-action dish-profile">
+                                <div class="icon dish"></div>
+                                <a class="internal-link" data-bind="attr: { href: detail }">Chi tiết món</a>
+                            </div>
+                            <div class="dish-action wished-overlay link-wish">
+                                <div class="icon wish"></div>
+
+                                <a data-bind="text: Favourite, click: like" class="wish-action" href=""></a>
+
+                            </div>
+
+                            <div class="center-info"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var Id = '@Model.Id';
+
+    var filter = 'Dishes';
+
+    var viewModel;
+
+    function Like() {
+
+    }
+
+    $(function () {
+
+        applyBindings();
+
+        $('#menu-Wishes').click(function () {
+            filter = 'Wishes';
+            viewModel.loadFoods();
+            $('#li-Dishes').removeClass('selected');
+            $('#li-Wishes').addClass('selected');
+        });
+
+        $('#menu-Dishes').click(function () {
+            filter = 'Dishes';
+            viewModel.loadFoods();
+            $('#li-Wishes').removeClass('selected');
+            $('#li-Dishes').addClass('selected');
+        });
+    });
+
+    function food(data) {
+        var self = this;
+        data = data || {};
+
+        self.SoLuongThich = ko.observable(data.Thich.length);
+
+        self.Favourite = ko.observable('Thích')
+        self.MaMon = data.MaMonAn;
+        self.TenMon = data.TenMon;
+        self.show = ko.observable(0);
+        self.visible = ko.observable(0);
+        self.detail = '@Url.Content("~/dish/")' + data.MaMonAn;
+
+        self.Hinh = ko.observable('url(@Url.Content("~/img/icons/default.dish.jpg"))');
+
+        if (data.Hinh != null) {
+            if (data.Hinh.trim() != '') {
+                link = 'url(' + data.Hinh + ')';
+                self.Hinh(link);
+            }
+        }
+
+        this.selected = ko.observable(false);
+
+        if ('@Request.IsAuthenticated.ToString()' == '@Boolean.TrueString') {
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if(msg == 'True') {
+                        self.Favourite('Đã thích');
+                    }
+                }
+            });
+        }
+
+        this.like = function () {
+
+            if ('@Request.IsAuthenticated.ToString()' == '@Boolean.FalseString') {
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    self.SoLuongThich(msg);
+                    self.Favourite('Đã thích');
+                }
+            });
+        }
+
+        this.showItem = function () {
+            this.selected(!this.selected());
+            self.visible(1);
+        }
+
+        this.hideItem = function () {
+            this.selected(!this.selected());
+            self.visible(0);
+        }
+    }
+
+    function viewModel() {
+        var self = this;
+
+        self.foods = ko.observableArray();
+
+        self.hoten = ko.observable();
+        self.diachi = ko.observable();
+        self.avatar = ko.observable('url(@Url.Content("~/img/avatars/default_avatar.2x.png"))');
+
+        self.loadPerson = function () {
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/NguoiDung/Profile/" + Id,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    msg = msg[0];
+                    console.log(msg);
+                    self.hoten(msg.Ho + ' ' + msg.Ten);
+                    self.diachi(msg.DiaChi);
+                    self.avatar('url(' + msg.Hinh + ')');
+                }
+            });
+        }
+
+        self.loadFoods = function () {
+            $.ajax({
+                type: "GET",
+                url: 'http://cookbookapi.apphb.com/api/MonAn/User' + filter + '/' + Id,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    var mappedFoods = $.map(msg, function (item) { return new food(item); });
+                    self.foods(mappedFoods);
+                }
+            });
+        }
+
+        self.loadPerson();
+        self.loadFoods();
+        return self;
+    }
+
+    function applyBindings() {
+        viewModel = new viewModel();
+        ko.applyBindings(viewModel);
+    }
+</script>

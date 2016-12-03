@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="app" class="section-people">
+    <div id="content" class="content ui-animate-opacity-250" style="opacity: 1;">
+        <div id="warning-container"></div>
+        <div id="people-list" class="col870 list-container">
+            <div class="thelist">
+                <ul data-bind="foreach: people" id="user-thumbnails-list" class="ui-list ui-list-users ui-people ui-count-12">
+                    <li class="ui-box type-user ui-count-12 has-activity">
+                        <div class="avatar">
+                            <div class="ui-avatar">
+                                <div data-bind="style: { backgroundImage: avatar, opacity: 1 }" class="ui-image ui-animate-opacity-250"></div>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="title">
+                                <a style="height: 79px;" data-bind="text: name, attr: { href: profile }" class="link-user internal-link"></a>
+                            </div>
+                            <div data-bind="text: location" class="activity"></div>
+                            <div class="extra2">
+                                <div class="ui-icon cook">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <div class="ui-btn">
+                                <a data-bind="attr: { href: profile }" class="following link-follow">Xem</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var viewModel;
+    var loading = false;
+    var page = 0;
+
+    $(function () {
+
+        applyBindings();
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                if (loading == true)
+                    return;
+                loading = true;
+                page++;
+                viewModel.loadPeople(page);
+            }
+        });
+
+    });
+
+    function person(data) {
+        var self = this;
+        data = data || {};
+
+        self.name = data.Ho + ' ' + data.Ten;
+        if (self.name == '') {
+            self.name = data.MaNguoiDung;
+        }
+
+        self.location = data.DiaChi;
+
+        self.profile = '@Url.Content("~/user/")' + data.MaNguoiDung;
+
+        self.avatar = ko.observable('url(@Url.Content("~/img/avatars/default_avatar.2x.png"))');
+        
+        if (data.Hinh != null) {
+            if (data.Hinh.trim() != '') {
+                link = 'url(' + data.Hinh + ')';
+                self.avatar(link);
+            }
+        }
+    }
+
+    function viewModel() {
+        var self = this;
+
+        self.people = ko.observableArray();
+
+        self.loadPeople = function (page) {
+            $.ajax({
+                type: "GET",
+                url: "http://cookbookapi.apphb.com/api/NguoiDung/Page/" + page,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+                    ko.utils.arrayForEach(msg, function (item) {
+                        self.people.push(new person(item));
+                    });
+                    loading = false;
+                },
+                error: function (res, status) {
+                    if (status === "error") {
+                        var errorMessage = $.parseJSON(res.responseText);
+                        console.log(errorMessage.Message);
+                    }
+                }
+            });
+        }
+        page = 0
+        self.loadPeople(page);
+        return self;
+    }
+
+    function applyBindings() {
+        viewModel = new viewModel();
+        ko.applyBindings(viewModel);
+    }
+</script>
