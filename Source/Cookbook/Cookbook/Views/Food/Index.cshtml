@@ -99,7 +99,7 @@
                                 {
                                     try
                                     {
-                                        var json = client.DownloadString("http://cookbookapi.apphb.com/api/loaimon");
+                                        var json = client.DownloadString("http://localhost:1114/api/loaimon");
                                         var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                                         dynamic model = serializer.Deserialize<dynamic>(json);
                                         string TenMonAn = System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(model[0]["TenLoaiMon"])));
@@ -139,7 +139,7 @@
                                 {
                                     try
                                     {
-                                        var json = client.DownloadString("http://cookbookapi.apphb.com/api/MucDo");
+                                        var json = client.DownloadString("http://localhost:1114/api/MucDo");
                                         var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                                         dynamic model = serializer.Deserialize<dynamic>(json);
                                         string MucDo = System.Text.Encoding.Unicode.GetString(System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode,System.Text.Encoding.Default.GetBytes(model[0]["TenMucDo"])));
@@ -202,7 +202,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "http://cookbookapi.apphb.com/api/MonAn",
+                url: "http://localhost:1114/api/MonAn",
                 data: JSON.stringify({
                     TenMon: $("#txtTenMon").val(),
                     GioiThieu: $("#txtGioiThieu").val(),

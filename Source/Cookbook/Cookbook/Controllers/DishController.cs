@@ -19,7 +19,7 @@ namespace Cookbook.Controllers
             try
             {
                 WebClient client = new WebClient();
-                var json = client.DownloadString(String.Format("http://cookbookapi.apphb.com/api/MonAn/Get/{0}", id));
+                var json = client.DownloadString(String.Format("http://localhost:1114/api/MonAn/Get/{0}", id));
                 var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 dynamic data = serializer.Deserialize<dynamic>(json);
 

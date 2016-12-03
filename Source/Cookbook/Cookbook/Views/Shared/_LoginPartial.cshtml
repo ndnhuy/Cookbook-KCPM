@@ -9,7 +9,7 @@
         <script>
             $.ajax({
                 type: "POST",
-                url: "http://cookbookapi.apphb.com/api/NguoiDung",
+                url: "http://localhost:1114/api/NguoiDung",
                 data: JSON.stringify({
                     MaNguoiDung: '@HttpContext.Current.User.Identity.Name',
                     Ho: '@Session["Ho"].ToString()',
@@ -30,7 +30,7 @@
     {
         using (var client = new System.Net.WebClient())
         {
-            var json = client.DownloadString(String.Format("http://cookbookapi.apphb.com/api/NguoiDung/Get/{0}", @HttpContext.Current.User.Identity.Name));
+            var json = client.DownloadString(String.Format("http://localhost:1114/api/NguoiDung/Get/{0}", @HttpContext.Current.User.Identity.Name));
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             dynamic model = serializer.Deserialize<dynamic>(json);
 

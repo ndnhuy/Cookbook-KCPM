@@ -210,7 +210,7 @@
         if ('@Request.IsAuthenticated.ToString()' == '@Boolean.TrueString') {
             $.ajax({
                 type: "GET",
-                url: "http://cookbookapi.apphb.com/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                url: "http://localhost:1114/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -229,7 +229,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://cookbookapi.apphb.com/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                url: "http://localhost:1114/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -263,7 +263,7 @@
 
             $.ajax({
                 type: "GET",
-                url: 'http://cookbookapi.apphb.com/api/RutTrich',
+                url: 'http://localhost:1114/api/RutTrich',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -282,7 +282,7 @@
 
             $.ajax({
                 type: "GET",
-                url: 'http://cookbookapi.apphb.com/api/RutTrich',
+                url: 'http://localhost:1114/api/RutTrich',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -301,7 +301,7 @@
 
             $.ajax({
                 type: "GET",
-                url: 'http://cookbookapi.apphb.com/api/MonAn/TopLike/3',
+                url: 'http://localhost:1114/api/MonAn/TopLike/3',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {

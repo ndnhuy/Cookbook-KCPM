@@ -90,7 +90,7 @@
         self.loadPeople = function (page) {
             $.ajax({
                 type: "GET",
-                url: "http://cookbookapi.apphb.com/api/NguoiDung/Page/" + page,
+                url: "http://localhost:1114/api/NguoiDung/Page/" + page,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {

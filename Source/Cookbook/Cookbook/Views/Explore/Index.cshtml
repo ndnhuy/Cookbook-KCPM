@@ -212,7 +212,7 @@
         if ('@Request.IsAuthenticated.ToString()' == '@Boolean.TrueString') {
             $.ajax({
                 type: "GET",
-                url: "http://cookbookapi.apphb.com/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                url: "http://localhost:1114/api/Thich/Exists/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -231,7 +231,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "http://cookbookapi.apphb.com/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
+                url: "http://localhost:1114/api/Thich/Add/" + '@HttpContext.Current.User.Identity.Name' + '-' + self.MaMon,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -259,7 +259,7 @@
         self.foods = ko.observableArray();
 
         self.loadFoods = function (page) {
-            var myurl = 'http://cookbookapi.apphb.com/api/MonAn/' + left + right + '/';
+            var myurl = 'http://localhost:1114/api/MonAn/' + left + right + '/';
 
             console.log(myurl);
 

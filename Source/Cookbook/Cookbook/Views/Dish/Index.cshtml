@@ -204,7 +204,7 @@
 
             $.ajax({
                 type: "POST",
-                url: 'http://cookbookapi.apphb.com/api/BinhLuan',
+                url: 'http://localhost:1114/api/BinhLuan',
                 data: JSON.stringify(binhluan),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -291,7 +291,7 @@
 
             $.ajax({
                 type: "GET",
-                url: 'http://cookbookapi.apphb.com/api/BinhLuan/GetCommentsByFoodId/' + mamon,
+                url: 'http://localhost:1114/api/BinhLuan/GetCommentsByFoodId/' + mamon,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
