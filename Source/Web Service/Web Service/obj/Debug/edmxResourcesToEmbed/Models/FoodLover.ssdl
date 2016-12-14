@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FoodLover.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BinhLuan">
+    <Key>
+      <PropertyRef Name="MaBinhLuan" />
+    </Key>
+    <Property Name="MaBinhLuan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaNguoiDung" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MaMonAn" Type="int" Nullable="false" />
+    <Property Name="NgayDang" Type="datetime" />
+    <Property Name="NoiDung" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LoaiMon">
+    <Key>
+      <PropertyRef Name="MaLoaiMon" />
+    </Key>
+    <Property Name="MaLoaiMon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenLoaiMon" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="MonAn">
+    <Key>
+      <PropertyRef Name="MaMonAn" />
+    </Key>
+    <Property Name="MaMonAn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenMon" Type="nvarchar(max)" />
+    <Property Name="GioiThieu" Type="nvarchar(max)" />
+    <Property Name="Hinh" Type="nvarchar(max)" />
+    <Property Name="ThoiGianChuanBi" Type="int" />
+    <Property Name="ThoiGianNau" Type="int" />
+    <Property Name="NgayDang" Type="datetime" />
+    <Property Name="NguyenLieu" Type="nvarchar(max)" />
+    <Property Name="CachLam" Type="nvarchar(max)" />
+    <Property Name="MaNguoiDung" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MaMucDo" Type="int" Nullable="false" />
+    <Property Name="MaLoaiMon" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MucDo">
+    <Key>
+      <PropertyRef Name="MaMucDo" />
+    </Key>
+    <Property Name="MaMucDo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenMucDo" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Ho" Type="nvarchar(max)" />
+    <Property Name="Ten" Type="nvarchar(max)" />
+    <Property Name="Hinh" Type="nvarchar(max)" />
+    <Property Name="DiaChi" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Thich">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+      <PropertyRef Name="MaMonAn" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MaMonAn" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_MonAnBinhLuan">
+    <End Role="MonAn" Type="Self.MonAn" Multiplicity="1" />
+    <End Role="BinhLuan" Type="Self.BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="MaMonAn" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MonAnLoaiMon">
+    <End Role="LoaiMon" Type="Self.LoaiMon" Multiplicity="1" />
+    <End Role="MonAn" Type="Self.MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiMon">
+        <PropertyRef Name="MaLoaiMon" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaLoaiMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MonAnThich">
+    <End Role="MonAn" Type="Self.MonAn" Multiplicity="1" />
+    <End Role="Thich" Type="Self.Thich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="MaMonAn" />
+      </Principal>
+      <Dependent Role="Thich">
+        <PropertyRef Name="MaMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MucDoMonAn">
+    <End Role="MucDo" Type="Self.MucDo" Multiplicity="1" />
+    <End Role="MonAn" Type="Self.MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MucDo">
+        <PropertyRef Name="MaMucDo" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaMucDo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NguoiDungBinhLuan">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
+    <End Role="BinhLuan" Type="Self.BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NguoiDungMonAn">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
+    <End Role="MonAn" Type="Self.MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NguoiDungThich">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
+    <End Role="Thich" Type="Self.Thich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="Thich">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="usp_BinhLuanMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="monan" Type="int" Mode="In" />
+    <Parameter Name="nguoidung" Type="nvarchar" Mode="In" />
+    <Parameter Name="noidung" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_LietKeBinhLuanMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="monan" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_ThichMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="manguoidung" Type="nvarchar" Mode="In" />
+    <Parameter Name="mamon" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_TimKiemMonAn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TT" Type="nvarchar" Mode="In" />
+    <Parameter Name="row" Type="int" Mode="In" />
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_TimKiemNguoiDung" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TT" Type="nvarchar" Mode="In" />
+    <Parameter Name="row" Type="int" Mode="In" />
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_TopDauBep" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_TopMonAnCuaDauBep" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="madaubep" Type="nvarchar" Mode="In" />
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_TopMonAnThich" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="FoodLoverStoreContainer">
+    <EntitySet Name="BinhLuan" EntityType="Self.BinhLuan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoaiMon" EntityType="Self.LoaiMon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MonAn" EntityType="Self.MonAn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MucDo" EntityType="Self.MucDo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Thich" EntityType="Self.Thich" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_MonAnBinhLuan" Association="Self.FK_MonAnBinhLuan">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="BinhLuan" EntitySet="BinhLuan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MonAnLoaiMon" Association="Self.FK_MonAnLoaiMon">
+      <End Role="LoaiMon" EntitySet="LoaiMon" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MonAnThich" Association="Self.FK_MonAnThich">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="Thich" EntitySet="Thich" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MucDoMonAn" Association="Self.FK_MucDoMonAn">
+      <End Role="MucDo" EntitySet="MucDo" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NguoiDungBinhLuan" Association="Self.FK_NguoiDungBinhLuan">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="BinhLuan" EntitySet="BinhLuan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NguoiDungMonAn" Association="Self.FK_NguoiDungMonAn">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NguoiDungThich" Association="Self.FK_NguoiDungThich">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="Thich" EntitySet="Thich" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

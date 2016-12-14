@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="FoodLover" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="FoodLoverContainer" annotation:LazyLoadingEnabled="false">
+    <EntitySet Name="NguoiDung" EntityType="FoodLover.NguoiDung" />
+    <EntitySet Name="MonAn" EntityType="FoodLover.MonAn" />
+    <EntitySet Name="BinhLuan" EntityType="FoodLover.BinhLuan" />
+    <EntitySet Name="MucDo" EntityType="FoodLover.MucDo" />
+    <EntitySet Name="LoaiMon" EntityType="FoodLover.LoaiMon" />
+    <AssociationSet Name="NguoiDungBinhLuan" Association="FoodLover.NguoiDungBinhLuan">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="BinhLuan" EntitySet="BinhLuan" />
+    </AssociationSet>
+    <AssociationSet Name="MonAnBinhLuan" Association="FoodLover.MonAnBinhLuan">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="BinhLuan" EntitySet="BinhLuan" />
+    </AssociationSet>
+    <AssociationSet Name="NguoiDungMonAn" Association="FoodLover.NguoiDungMonAn">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="MucDoMonAn" Association="FoodLover.MucDoMonAn">
+      <End Role="MucDo" EntitySet="MucDo" />
+      <End Role="MonAn" EntitySet="MonAn" />
+    </AssociationSet>
+    <AssociationSet Name="MonAnLoaiMon" Association="FoodLover.MonAnLoaiMon">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="LoaiMon" EntitySet="LoaiMon" />
+    </AssociationSet>
+    <EntitySet Name="Thich" EntityType="FoodLover.Thich" />
+    <AssociationSet Name="NguoiDungThich" Association="FoodLover.NguoiDungThich">
+      <End Role="NguoiDung" EntitySet="NguoiDung" />
+      <End Role="Thich" EntitySet="Thich" />
+    </AssociationSet>
+    <AssociationSet Name="MonAnThich" Association="FoodLover.MonAnThich">
+      <End Role="MonAn" EntitySet="MonAn" />
+      <End Role="Thich" EntitySet="Thich" />
+    </AssociationSet>
+    <FunctionImport Name="usp_BinhLuanMonAn">
+      <Parameter Name="monan" Mode="In" Type="Int32" />
+      <Parameter Name="nguoidung" Mode="In" Type="String" />
+      <Parameter Name="noidung" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="usp_LietKeBinhLuanMonAn" ReturnType="Collection(FoodLover.usp_LietKeBinhLuanMonAn_Result)">
+      <Parameter Name="monan" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_ThichMonAn">
+      <Parameter Name="manguoidung" Mode="In" Type="String" />
+      <Parameter Name="mamon" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TimKiemMonAn" ReturnType="Collection(FoodLover.usp_TimKiemMonAn_Result)">
+      <Parameter Name="TT" Mode="In" Type="String" />
+      <Parameter Name="row" Mode="In" Type="Int32" />
+      <Parameter Name="count" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TimKiemNguoiDung" ReturnType="Collection(FoodLover.usp_TimKiemNguoiDung_Result)">
+      <Parameter Name="TT" Mode="In" Type="String" />
+      <Parameter Name="row" Mode="In" Type="Int32" />
+      <Parameter Name="count" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TopDauBep" ReturnType="Collection(FoodLover.usp_TopDauBep_Result)" />
+    <FunctionImport Name="usp_TopMonAnCuaDauBep" ReturnType="Collection(FoodLover.usp_TopMonAnCuaDauBep_Result)">
+      <Parameter Name="madaubep" Mode="In" Type="String" />
+      <Parameter Name="count" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_TopMonAnThich" ReturnType="Collection(FoodLover.usp_TopMonAnThich_Result)">
+      <Parameter Name="count" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Ho" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Ten" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Hinh" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="DiaChi" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="MonAn">
+    <Key>
+      <PropertyRef Name="MaMonAn" />
+    </Key>
+    <Property Name="MaMonAn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenMon" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="GioiThieu" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Hinh" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ThoiGianChuanBi" Type="Int32" Nullable="true" />
+    <Property Name="ThoiGianNau" Type="Int32" Nullable="true" />
+    <Property Name="NgayDang" Type="DateTime" Nullable="true" Precision="3" />
+    <Property Name="NguyenLieu" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CachLam" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="BinhLuan" Relationship="FoodLover.MonAnBinhLuan" FromRole="MonAn" ToRole="BinhLuan" />
+    <NavigationProperty Name="NguoiDung" Relationship="FoodLover.NguoiDungMonAn" FromRole="MonAn" ToRole="NguoiDung" />
+    <Property Name="MaNguoiDung" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MucDo" Relationship="FoodLover.MucDoMonAn" FromRole="MonAn" ToRole="MucDo" />
+    <Property Name="MaMucDo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LoaiMon" Relationship="FoodLover.MonAnLoaiMon" FromRole="MonAn" ToRole="LoaiMon" />
+    <Property Name="MaLoaiMon" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Thich" Relationship="FoodLover.MonAnThich" FromRole="MonAn" ToRole="Thich" />
+  </EntityType>
+  <EntityType Name="BinhLuan">
+    <Key>
+      <PropertyRef Name="MaBinhLuan" />
+    </Key>
+    <Property Name="MaBinhLuan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaNguoiDung" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MaMonAn" Type="Int32" Nullable="false" />
+    <Property Name="NgayDang" Type="DateTime" Nullable="true" Precision="3" />
+    <Property Name="NoiDung" Type="String" Nullable="true" MaxLength="255" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="MucDo">
+    <Key>
+      <PropertyRef Name="MaMucDo" />
+    </Key>
+    <Property Name="MaMucDo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenMucDo" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="LoaiMon">
+    <Key>
+      <PropertyRef Name="MaLoaiMon" />
+    </Key>
+    <Property Name="MaLoaiMon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoaiMon" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="NguoiDungBinhLuan">
+    <End Type="FoodLover.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+    <End Type="FoodLover.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MonAnBinhLuan">
+    <End Type="FoodLover.MonAn" Role="MonAn" Multiplicity="1" />
+    <End Type="FoodLover.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="MaMonAn" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NguoiDungMonAn">
+    <End Type="FoodLover.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+    <End Type="FoodLover.MonAn" Role="MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MucDoMonAn">
+    <End Type="FoodLover.MucDo" Role="MucDo" Multiplicity="1" />
+    <End Type="FoodLover.MonAn" Role="MonAn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MucDo">
+        <PropertyRef Name="MaMucDo" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaMucDo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MonAnLoaiMon">
+    <End Type="FoodLover.MonAn" Role="MonAn" Multiplicity="*" />
+    <End Type="FoodLover.LoaiMon" Role="LoaiMon" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiMon">
+        <PropertyRef Name="MaLoaiMon" />
+      </Principal>
+      <Dependent Role="MonAn">
+        <PropertyRef Name="MaLoaiMon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Thich">
+    <Key>
+      <PropertyRef Name="MaNguoiDung" />
+      <PropertyRef Name="MaMonAn" />
+    </Key>
+    <Property Name="MaNguoiDung" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MaMonAn" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="NguoiDungThich">
+    <End Type="FoodLover.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+    <End Type="FoodLover.Thich" Role="Thich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="MaNguoiDung" />
+      </Principal>
+      <Dependent Role="Thich">
+        <PropertyRef Name="MaNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MonAnThich">
+    <End Type="FoodLover.MonAn" Role="MonAn" Multiplicity="1" />
+    <End Type="FoodLover.Thich" Role="Thich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MonAn">
+        <PropertyRef Name="MaMonAn" />
+      </Principal>
+      <Dependent Role="Thich">
+        <PropertyRef Name="MaMonAn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="usp_LietKeBinhLuanMonAn_Result">
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="MaMonAn" Nullable="false" />
+    <Property Type="DateTime" Name="ThoiGian" Nullable="true" Precision="23" />
+    <Property Type="String" Name="NoiDung" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="HoTen" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_TimKiemMonAn_Result">
+    <Property Type="Int32" Name="MaMonAn" Nullable="false" />
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="TenMon" Nullable="true" />
+    <Property Type="String" Name="GioiThieu" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianChuanBi" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianNau" Nullable="true" />
+    <Property Type="DateTime" Name="NgayDang" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="MaLoaiMon" Nullable="false" />
+    <Property Type="Int32" Name="MaMucDo" Nullable="false" />
+    <Property Type="String" Name="NguyenLieu" Nullable="true" />
+    <Property Type="String" Name="CachLam" Nullable="true" />
+    <Property Type="Int32" Name="SoLuongThich" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_TimKiemNguoiDung_Result">
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="HoTen" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+    <Property Type="String" Name="DiaChi" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_TopDauBep_Result">
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="HoTen" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+    <Property Type="String" Name="DiaChi" Nullable="true" />
+    <Property Type="Int32" Name="SoLuongThich" Nullable="true" />
+    <Property Type="Int32" Name="SoLuongMon" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_TopMonAnCuaDauBep_Result">
+    <Property Type="Int32" Name="MaMonAn" Nullable="false" />
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="TenMon" Nullable="true" />
+    <Property Type="String" Name="GioiThieu" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianChuanBi" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianNau" Nullable="true" />
+    <Property Type="DateTime" Name="NgayDang" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="MaLoaiMon" Nullable="false" />
+    <Property Type="Int32" Name="MaMucDo" Nullable="false" />
+    <Property Type="String" Name="NguyenLieu" Nullable="true" />
+    <Property Type="String" Name="CachLam" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="usp_TopMonAnThich_Result">
+    <Property Type="Int32" Name="MaMonAn" Nullable="false" />
+    <Property Type="String" Name="MaNguoiDung" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="TenMon" Nullable="true" />
+    <Property Type="String" Name="GioiThieu" Nullable="true" />
+    <Property Type="String" Name="Hinh" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianChuanBi" Nullable="true" />
+    <Property Type="Int32" Name="ThoiGianNau" Nullable="true" />
+    <Property Type="DateTime" Name="NgayDang" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="MaLoaiMon" Nullable="false" />
+    <Property Type="Int32" Name="MaMucDo" Nullable="false" />
+    <Property Type="String" Name="NguyenLieu" Nullable="true" />
+    <Property Type="String" Name="CachLam" Nullable="true" />
+    <Property Type="String" Name="HoTen" Nullable="true" />
+    <Property Type="String" Name="HinhNguoiDung" Nullable="true" />
+    <Property Type="String" Name="DiaChi" Nullable="true" />
+    <Property Type="Int32" Name="SoLuongThich" Nullable="true" />
+  </ComplexType>
+</Schema>

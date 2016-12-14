@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FoodLoverStoreContainer" CdmEntityContainer="FoodLoverContainer">
+    <EntitySetMapping Name="NguoiDung">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.NguoiDung)">
+        <MappingFragment StoreEntitySet="NguoiDung">
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="Ho" ColumnName="Ho" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonAn">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.MonAn)">
+        <MappingFragment StoreEntitySet="MonAn">
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="TenMon" ColumnName="TenMon" />
+          <ScalarProperty Name="GioiThieu" ColumnName="GioiThieu" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="ThoiGianChuanBi" ColumnName="ThoiGianChuanBi" />
+          <ScalarProperty Name="ThoiGianNau" ColumnName="ThoiGianNau" />
+          <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+          <ScalarProperty Name="NguyenLieu" ColumnName="NguyenLieu" />
+          <ScalarProperty Name="CachLam" ColumnName="CachLam" />
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="MaMucDo" ColumnName="MaMucDo" />
+          <ScalarProperty Name="MaLoaiMon" ColumnName="MaLoaiMon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BinhLuan">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.BinhLuan)">
+        <MappingFragment StoreEntitySet="BinhLuan">
+          <ScalarProperty Name="MaBinhLuan" ColumnName="MaBinhLuan" />
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+          <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MucDo">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.MucDo)">
+        <MappingFragment StoreEntitySet="MucDo">
+          <ScalarProperty Name="MaMucDo" ColumnName="MaMucDo" />
+          <ScalarProperty Name="TenMucDo" ColumnName="TenMucDo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiMon">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.LoaiMon)">
+        <MappingFragment StoreEntitySet="LoaiMon">
+          <ScalarProperty Name="MaLoaiMon" ColumnName="MaLoaiMon" />
+          <ScalarProperty Name="TenLoaiMon" ColumnName="TenLoaiMon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Thich">
+      <EntityTypeMapping TypeName="IsTypeOf(FoodLover.Thich)">
+        <MappingFragment StoreEntitySet="Thich">
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_BinhLuanMonAn" FunctionName="FoodLover.Store.usp_BinhLuanMonAn" />
+    <FunctionImportMapping FunctionImportName="usp_LietKeBinhLuanMonAn" FunctionName="FoodLover.Store.usp_LietKeBinhLuanMonAn">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_LietKeBinhLuanMonAn_Result">
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
+          <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_ThichMonAn" FunctionName="FoodLover.Store.usp_ThichMonAn" />
+    <FunctionImportMapping FunctionImportName="usp_TimKiemMonAn" FunctionName="FoodLover.Store.usp_TimKiemMonAn">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_TimKiemMonAn_Result">
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="TenMon" ColumnName="TenMon" />
+          <ScalarProperty Name="GioiThieu" ColumnName="GioiThieu" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="ThoiGianChuanBi" ColumnName="ThoiGianChuanBi" />
+          <ScalarProperty Name="ThoiGianNau" ColumnName="ThoiGianNau" />
+          <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+          <ScalarProperty Name="MaLoaiMon" ColumnName="MaLoaiMon" />
+          <ScalarProperty Name="MaMucDo" ColumnName="MaMucDo" />
+          <ScalarProperty Name="NguyenLieu" ColumnName="NguyenLieu" />
+          <ScalarProperty Name="CachLam" ColumnName="CachLam" />
+          <ScalarProperty Name="SoLuongThich" ColumnName="SoLuongThich" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_TimKiemNguoiDung" FunctionName="FoodLover.Store.usp_TimKiemNguoiDung">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_TimKiemNguoiDung_Result">
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_TopDauBep" FunctionName="FoodLover.Store.usp_TopDauBep">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_TopDauBep_Result">
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="SoLuongThich" ColumnName="SoLuongThich" />
+          <ScalarProperty Name="SoLuongMon" ColumnName="SoLuongMon" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_TopMonAnCuaDauBep" FunctionName="FoodLover.Store.usp_TopMonAnCuaDauBep">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_TopMonAnCuaDauBep_Result">
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="TenMon" ColumnName="TenMon" />
+          <ScalarProperty Name="GioiThieu" ColumnName="GioiThieu" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="ThoiGianChuanBi" ColumnName="ThoiGianChuanBi" />
+          <ScalarProperty Name="ThoiGianNau" ColumnName="ThoiGianNau" />
+          <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+          <ScalarProperty Name="MaLoaiMon" ColumnName="MaLoaiMon" />
+          <ScalarProperty Name="MaMucDo" ColumnName="MaMucDo" />
+          <ScalarProperty Name="NguyenLieu" ColumnName="NguyenLieu" />
+          <ScalarProperty Name="CachLam" ColumnName="CachLam" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_TopMonAnThich" FunctionName="FoodLover.Store.usp_TopMonAnThich">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FoodLover.usp_TopMonAnThich_Result">
+          <ScalarProperty Name="MaMonAn" ColumnName="MaMonAn" />
+          <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
+          <ScalarProperty Name="TenMon" ColumnName="TenMon" />
+          <ScalarProperty Name="GioiThieu" ColumnName="GioiThieu" />
+          <ScalarProperty Name="Hinh" ColumnName="Hinh" />
+          <ScalarProperty Name="ThoiGianChuanBi" ColumnName="ThoiGianChuanBi" />
+          <ScalarProperty Name="ThoiGianNau" ColumnName="ThoiGianNau" />
+          <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+          <ScalarProperty Name="MaLoaiMon" ColumnName="MaLoaiMon" />
+          <ScalarProperty Name="MaMucDo" ColumnName="MaMucDo" />
+          <ScalarProperty Name="NguyenLieu" ColumnName="NguyenLieu" />
+          <ScalarProperty Name="CachLam" ColumnName="CachLam" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+          <ScalarProperty Name="HinhNguoiDung" ColumnName="HinhNguoiDung" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="SoLuongThich" ColumnName="SoLuongThich" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

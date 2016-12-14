@@ -1,0 +1,39 @@
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Web Service.dll.config
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Web Service.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Web Service.pdb
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\EntityFramework.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\HtmlAgilityPack.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Microsoft.Web.Infrastructure.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Newtonsoft.Json.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Net.Http.Formatting.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Cors.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Helpers.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.Cors.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.Tracing.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.WebHost.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Mvc.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Razor.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.Deployment.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.Razor.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\WebMatrix.Data.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\EntityFramework.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\HtmlAgilityPack.pdb
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\HtmlAgilityPack.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\Newtonsoft.Json.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Net.Http.Formatting.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Helpers.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.Cors.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.Tracing.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Http.WebHost.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Mvc.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.Razor.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.Deployment.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\System.Web.WebPages.Razor.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\bin\WebMatrix.Data.xml
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\obj\Debug\Web Service.csprojResolveAssemblyReference.cache
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\obj\Debug\Web Service.dll
+D:\Study\Univer\KCPM\DA\DA on github\Source\Web Service\Web Service\obj\Debug\Web Service.pdb
